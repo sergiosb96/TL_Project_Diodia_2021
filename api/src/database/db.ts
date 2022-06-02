@@ -7,8 +7,8 @@ const pool =
         // host: "83.212.102.64",
         host: 'localhost',
         port: 3307,
-        user: "ntua",
-        password: "ntua123!",
+        user: "user",
+        password: "password",
         database: "ntua"
     });
 
