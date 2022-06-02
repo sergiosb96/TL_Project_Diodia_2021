@@ -1,0 +1,1006 @@
+{
+	"info": {
+		"_postman_id": "0eb1ba2a-1cc4-4667-9f92-75f7d2dfa9b8",
+		"name": "TL21-88",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// get response data\r",
+									"var data = pm.response.json();\r",
+									"\r",
+									"// set the token that was received from the response\r",
+									"var token = data.data.token;\r",
+									"pm.collectionVariables.set(\"token\", token);\r",
+									"\r",
+									"pm.test(\"Username is the same as the one we used to login\", () => {\r",
+									"    const username = pm.collectionVariables.get(\"username\");\r",
+									"    pm.expect(data.data.profile.username).to.eql(username);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name is OK\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{protocol}}://{{baseUrl}}/login",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Clear token variable\r",
+									"pm.collectionVariables.set(\"token\", \"\");\r",
+									"\r",
+									"pm.test(\"Status code name is OK\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{protocol}}://{{baseUrl}}/logout",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetProfile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// get response data\r",
+									"var data = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Username is the same as the logged in user\", () => {\r",
+									"    const username = pm.collectionVariables.get(\"username\");\r",
+									"    pm.expect(data.data.profile.username).to.eql(username);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name is OK\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{protocol}}://{{baseUrl}}/getProfile",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"getProfile"
+							],
+							"query": [
+								{
+									"key": "opID",
+									"value": "egnatia",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "Healthcheck",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// get response data\r",
+									"var data = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code name is OK\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name is OK\", function () {\r",
+									"    pm.expect(data.message).to.eql(\"Success\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{protocol}}://{{baseUrl}}/admin/healthcheck",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"healthcheck"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset passes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// get response data\r",
+									"var data = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code name is OK\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name is OK\", function () {\r",
+									"    pm.expect(data.message).to.eql(\"Success\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Description is Reset Passes successfully\", function () {\r",
+									"    pm.expect(data.message).to.eql(\"Reset Passes successfully\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{protocol}}://{{baseUrl}}/admin/resetpasses",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"resetpasses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset stations",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// get response data\r",
+									"var data = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code name is OK\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name is OK\", function () {\r",
+									"    pm.expect(data.message).to.eql(\"Success\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Description is Reset Operators successfully\", function () {\r",
+									"    pm.expect(data.message).to.eql(\"Reset Operators successfully\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{protocol}}://{{baseUrl}}/admin/resetoperators",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"resetoperators"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset vehicles",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// get response data\r",
+									"var data = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code name is OK\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name is OK\", function () {\r",
+									"    pm.expect(data.message).to.eql(\"Success\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Description is Reset Vehicles successfully\", function () {\r",
+									"    pm.expect(data.message).to.eql(\"Reset Vehicles successfully\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{protocol}}://{{baseUrl}}/admin/resetvehicles",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"resetvehicles"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Passes per station",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// get response data\r",
+							"var data = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Station is the same as the request\", () => {\r",
+							"    const station = pm.collectionVariables.get(\"station\");\r",
+							"    pm.expect(data.data.Station).to.eql(station);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"StationOperator is the same as the request\", () => {\r",
+							"    const stationOperator = pm.collectionVariables.get(\"stationOperator\");\r",
+							"    pm.expect(data.data.StationOperator).to.eql(stationOperator);\r",
+							"});\r",
+							"\r",
+							"const dateSplit = (dateString) => {\r",
+							"    return `${dateString.slice(0, 4)}-${dateString.slice(4, 6)}-${dateString.slice(6, 8)}T00:00:00.000Z`;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"PeriodFrom is the same as the request\", () => {\r",
+							"    const dateFrom = pm.collectionVariables.get(\"dateFrom\");\r",
+							"    pm.expect(data.data.PeriodFrom).to.eql(dateSplit(dateFrom));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"PeriodTo is the same as the request\", () => {\r",
+							"    const dateTo = pm.collectionVariables.get(\"dateTo\");\r",
+							"    pm.expect(data.data.PeriodTo).to.eql(dateSplit(dateTo));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"PassesList array has NumberOfPasses passes\", () => {\r",
+							"    pm.expect(data.data.PassesList.length).to.eql(data.data.NumberOfPasses);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{protocol}}://{{baseUrl}}/PassesPerStation/{{station}}/{{dateFrom}}/{{dateTo}}",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"PassesPerStation",
+						"{{station}}",
+						"{{dateFrom}}",
+						"{{dateTo}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Passes Analysis",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// get response data\r",
+							"var data = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Operator 1 ID is the same as the request\", () => {\r",
+							"    const op1 = pm.collectionVariables.get(\"op1\");\r",
+							"    pm.expect(data.data[\"op1_ID\"]).to.eql(op1);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Operator 2 ID is the same as the request\", () => {\r",
+							"    const op2 = pm.collectionVariables.get(\"op2\");\r",
+							"    pm.expect(data.data[\"op2_ID\"]).to.eql(op2);\r",
+							"});\r",
+							"\r",
+							"const dateSplit = (dateString) => {\r",
+							"    return `${dateString.slice(0, 4)}-${dateString.slice(4, 6)}-${dateString.slice(6, 8)}T00:00:00.000Z`;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"PeriodFrom is the same as the request\", () => {\r",
+							"    const dateFrom = pm.collectionVariables.get(\"dateFrom\");\r",
+							"    pm.expect(data.data.PeriodFrom).to.eql(dateSplit(dateFrom));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"PeriodTo is the same as the request\", () => {\r",
+							"    const dateTo = pm.collectionVariables.get(\"dateTo\");\r",
+							"    pm.expect(data.data.PeriodTo).to.eql(dateSplit(dateTo));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"PassesList array has NumberOfPasses passes\", () => {\r",
+							"    pm.expect(data.data.PassesList.length).to.eql(data.data.NumberOfPasses);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{protocol}}://{{baseUrl}}/PassesAnalysis/{{op1}}/{{op2}}/{{dateFrom}}/{{dateTo}}",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"PassesAnalysis",
+						"{{op1}}",
+						"{{op2}}",
+						"{{dateFrom}}",
+						"{{dateTo}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Balance Analysis",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// get response data\r",
+							"var data = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Operator 1 ID is the same as the request\", () => {\r",
+							"    const op1 = pm.collectionVariables.get(\"op1\");\r",
+							"    pm.expect(data.data[\"op1_ID\"]).to.eql(op1);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Operator 2 ID is the same as the request\", () => {\r",
+							"    const op2 = pm.collectionVariables.get(\"op2\");\r",
+							"    pm.expect(data.data[\"op2_ID\"]).to.eql(op2);\r",
+							"});\r",
+							"\r",
+							"const dateSplit = (dateString) => {\r",
+							"    return `${dateString.slice(0, 4)}-${dateString.slice(4, 6)}-${dateString.slice(6, 8)}T00:00:00.000Z`;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"PeriodFrom is the same as the request\", () => {\r",
+							"    const dateFrom = pm.collectionVariables.get(\"dateFrom\");\r",
+							"    pm.expect(data.data.PeriodFrom).to.eql(dateSplit(dateFrom));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"PeriodTo is the same as the request\", () => {\r",
+							"    const dateTo = pm.collectionVariables.get(\"dateTo\");\r",
+							"    pm.expect(data.data.PeriodTo).to.eql(dateSplit(dateTo));\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{protocol}}://{{baseUrl}}/BalanceAnalysis/{{op1}}/{{op2}}/{{dateFrom}}/{{dateTo}}",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"BalanceAnalysis",
+						"{{op1}}",
+						"{{op2}}",
+						"{{dateFrom}}",
+						"{{dateTo}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Passes Cost",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// get response data\r",
+							"var data = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Operator 1 ID is the same as the request\", () => {\r",
+							"    const op1 = pm.collectionVariables.get(\"op1\");\r",
+							"    pm.expect(data.data[\"op1_ID\"]).to.eql(op1);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Operator 2 ID is the same as the request\", () => {\r",
+							"    const op2 = pm.collectionVariables.get(\"op2\");\r",
+							"    pm.expect(data.data[\"op2_ID\"]).to.eql(op2);\r",
+							"});\r",
+							"\r",
+							"const dateSplit = (dateString) => {\r",
+							"    return `${dateString.slice(0, 4)}-${dateString.slice(4, 6)}-${dateString.slice(6, 8)}T00:00:00.000Z`;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"PeriodFrom is the same as the request\", () => {\r",
+							"    const dateFrom = pm.collectionVariables.get(\"dateFrom\");\r",
+							"    pm.expect(data.data.PeriodFrom).to.eql(dateSplit(dateFrom));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"PeriodTo is the same as the request\", () => {\r",
+							"    const dateTo = pm.collectionVariables.get(\"dateTo\");\r",
+							"    pm.expect(data.data.PeriodTo).to.eql(dateSplit(dateTo));\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{protocol}}://{{baseUrl}}/PassesCost/{{op1}}/{{op2}}/{{dateFrom}}/{{dateTo}}",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"PassesCost",
+						"{{op1}}",
+						"{{op2}}",
+						"{{dateFrom}}",
+						"{{dateTo}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Charges By",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// get response data\r",
+							"var data = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Operator 1 ID is the same as the request\", () => {\r",
+							"    const op1 = pm.collectionVariables.get(\"op1\");\r",
+							"    pm.expect(data.data[\"op_ID\"]).to.eql(op1);\r",
+							"});\r",
+							"\r",
+							"const dateSplit = (dateString) => {\r",
+							"    return `${dateString.slice(0, 4)}-${dateString.slice(4, 6)}-${dateString.slice(6, 8)}T00:00:00.000Z`;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"PeriodFrom is the same as the request\", () => {\r",
+							"    const dateFrom = pm.collectionVariables.get(\"dateFrom\");\r",
+							"    pm.expect(data.data.PeriodFrom).to.eql(dateSplit(dateFrom));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"PeriodTo is the same as the request\", () => {\r",
+							"    const dateTo = pm.collectionVariables.get(\"dateTo\");\r",
+							"    pm.expect(data.data.PeriodTo).to.eql(dateSplit(dateTo));\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{protocol}}://{{baseUrl}}/ChargesBy/{{op1}}/{{dateFrom}}/{{dateTo}}",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"ChargesBy",
+						"{{op1}}",
+						"{{dateFrom}}",
+						"{{dateTo}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Statistics",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// get response data\r",
+							"var data = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Operator 1 ID is the same as the request\", () => {\r",
+							"    const op1 = pm.collectionVariables.get(\"op1\");\r",
+							"    pm.expect(data.data[\"op_ID\"]).to.eql(op1);\r",
+							"});\r",
+							"\r",
+							"const dateSplit = (dateString) => {\r",
+							"    return `${dateString.slice(0, 4)}-${dateString.slice(4, 6)}-${dateString.slice(6, 8)}T00:00:00.000Z`;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"PeriodFrom is the same as the request\", () => {\r",
+							"    const dateFrom = pm.collectionVariables.get(\"dateFrom\");\r",
+							"    pm.expect(data.data.PeriodFrom).to.eql(dateSplit(dateFrom));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"PeriodTo is the same as the request\", () => {\r",
+							"    const dateTo = pm.collectionVariables.get(\"dateTo\");\r",
+							"    pm.expect(data.data.PeriodTo).to.eql(dateSplit(dateTo));\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{protocol}}://{{baseUrl}}/GetStatistics/{{op1}}/{{dateFrom}}/{{dateTo}}",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"GetStatistics",
+						"{{op1}}",
+						"{{dateFrom}}",
+						"{{dateTo}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetStations",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// get response data\r",
+							"var data = pm.response.json();\r",
+							"\r",
+							"pm.test(\"stations array has exactly 84 stations (as given on csv)\", () => {\r",
+							"    pm.expect(data.data.stations.length).to.eql(84);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{protocol}}://{{baseUrl}}/GetStations",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"GetStations"
+					],
+					"query": [
+						{
+							"key": "opID",
+							"value": "egnatia",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetOperators",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// get response data\r",
+							"var data = pm.response.json();\r",
+							"\r",
+							"pm.test(\"operators array has exactly 7 operators (as given on csv)\", () => {\r",
+							"    pm.expect(data.data.operators.length).to.eql(7);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{protocol}}://{{baseUrl}}/GetOperators",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"GetOperators"
+					],
+					"query": [
+						{
+							"key": "opID",
+							"value": "egnatia",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Pass",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "stationID",
+							"value": "AO15",
+							"type": "text"
+						},
+						{
+							"key": "vehicleID",
+							"value": "KF48RSD79865",
+							"type": "text"
+						},
+						{
+							"key": "pass_time",
+							"value": "2021-12-18T20:49:35Z",
+							"type": "text"
+						},
+						{
+							"key": "charge",
+							"value": "5",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{protocol}}://{{baseUrl}}/AddPass",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"AddPass"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "localhost:9103/interoperability/api",
+			"type": "string"
+		},
+		{
+			"key": "protocol",
+			"value": "http",
+			"type": "string"
+		},
+		{
+			"key": "username",
+			"value": "admin",
+			"type": "string"
+		},
+		{
+			"key": "password",
+			"value": "123456",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "op1",
+			"value": "aodos",
+			"type": "string"
+		},
+		{
+			"key": "op2",
+			"value": "egnatia",
+			"type": "string"
+		},
+		{
+			"key": "station",
+			"value": "AO00",
+			"type": "string"
+		},
+		{
+			"key": "stationOperator",
+			"value": "aodos",
+			"type": "string"
+		},
+		{
+			"key": "dateFrom",
+			"value": "20201001",
+			"type": "string"
+		},
+		{
+			"key": "dateTo",
+			"value": "20201031",
+			"type": "string"
+		}
+	]
+}

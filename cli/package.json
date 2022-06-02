@@ -1,0 +1,22 @@
+{
+  "name": "cli",
+  "version": "1.0.0",
+  "description": "Command line interface (CLI) for interoperability API",
+  "main": "bin/index.js",
+  "bin": {
+    "se2188": "./bin/index.js"
+  },
+  "scripts": {
+    "unit": "jest -c jest.config.unit.js",
+    "functional": "jest -c jest.config.functional.js"
+  },
+  "author": "se21-88",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "~0.24.0",
+    "cli-progress": "~3.10.0",
+    "fast-csv": "~4.3.6",
+    "jest": "~27.5.1",
+    "yargs": "~17.3.1"
+  }
+}

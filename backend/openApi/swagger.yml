@@ -1,0 +1,199 @@
+openapi: 3.0.0
+info:
+  title: TL21-88
+  version: 1.0.0
+servers:
+  - url: http://83.212.102.64:9103
+  - url: http://localhost:9103
+tags:
+  - name: auth
+  - name: admin
+paths:
+  /interoperability/api/login:
+    post:
+      tags:
+        - auth
+      summary: Login
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: 'admin'
+                password:
+                  type: string
+                  example: '123456'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /interoperability/api/logout:
+    post:
+      tags:
+        - auth
+      summary: Logout
+      requestBody:
+        content: {}
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /interoperability/api/getProfile:
+    get:
+      tags:
+        - auth
+      summary: GetProfile
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /interoperability/api/admin/healthcheck:
+    get:
+      tags:
+        - admin
+      summary: Healthcheck
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /interoperability/api/admin/resetpasses:
+    post:
+      tags:
+        - admin
+      summary: Reset passes
+      requestBody:
+        content: {}
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /interoperability/api/admin/resetoperators:
+    post:
+      tags:
+        - admin
+      summary: Reset stations
+      requestBody:
+        content: {}
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /interoperability/api/admin/resetvehicles:
+    post:
+      tags:
+        - admin
+      summary: Reset vehicles
+      requestBody:
+        content: {}
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /interoperability/api/PassesPerStation/NE08/2020-12-12T20:49:35Z/2021-12-18T20:49:35Z:
+    get:
+      tags:
+        - default
+      summary: Passes per station
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /interoperability/api/PassesAnalysis/egnatia/gefyra/2020-12-12T20:49:35Z/2021-12-18T20:49:35Z:
+    get:
+      tags:
+        - default
+      summary: Passes Analysis
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /interoperability/api/BalanceAnalysis/egnatia/gefyra/2020-12-12T20:49:35Z/2021-12-18T20:49:35Z:
+    get:
+      tags:
+        - default
+      summary: Balance Analysis
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /interoperability/api/PassesCost/egnatia/gefyra/2020-12-12T20:49:35Z/2021-12-18T20:49:35Z:
+    get:
+      tags:
+        - default
+      summary: Passes Cost
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /interoperability/api/ChargesBy/egnatia/2020-12-12T20:49:35Z/2021-12-18T20:49:35Z:
+    get:
+      tags:
+        - default
+      summary: Charges By
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /interoperability/api/GetStatistics/egnatia/2020-12-12T20:49:35Z/2021-12-18T20:49:35Z:
+    get:
+      tags:
+        - default
+      summary: Get Statistics
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /interoperability/api/GetStations:
+    get:
+      tags:
+        - default
+      summary: GetOperators
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /interoperability/api/AddPass:
+    post:
+      tags:
+        - default
+      summary: Add Pass
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                stationID:
+                  type: string
+                  example: 'AO15'
+                vehicleID:
+                  type: string
+                  example: 'KF48RSD79865'
+                pass_time:
+                  type: string
+                  example: '2021-12-18T20:49:35Z'
+                charge:
+                  type: string
+                  example: '5'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}

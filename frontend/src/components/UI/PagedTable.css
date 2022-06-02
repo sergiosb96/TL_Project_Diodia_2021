@@ -1,0 +1,22 @@
+.page-link {
+  background-color: white !important;
+  color: black !important;
+}
+
+.page-item a:hover {
+  background-color: grey !important;
+  color: white !important;
+}
+
+.page-item.active .page-link {
+  background-color: black !important;
+  color: white !important;
+}
+
+.bordered-input {
+  width: 100%;
+  border: 3px solid black;
+  border-radius: 16px;
+  text-align: center;
+  padding: 10px;
+}

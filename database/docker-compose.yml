@@ -1,0 +1,25 @@
+version: '3.3'
+
+services:
+  database:
+    image: mariadb:latest
+    container_name: database
+    restart: unless-stopped
+    environment:      
+       MYSQL_ROOT_PASSWORD: HKkcEDA5WVRRpLt9swYLnCkKX
+       MYSQL_DATABASE: ntua
+       MYSQL_USER: ntua
+       MYSQL_PASSWORD: ntua123!
+       MYSQL_TCP_PORT: 3307
+    ports:
+    - 3307:3307
+    volumes:
+      - /volumes/dbdata:/var/lib/mysql
+    command: '--default-authentication-plugin=mysql_native_password'
+    networks:
+      - app-network
+      
+networks:
+  app-network:
+    driver: bridge
+
